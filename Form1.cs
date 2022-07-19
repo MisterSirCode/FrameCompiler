@@ -23,6 +23,11 @@ namespace FrameCompiler
 
         int fileCount = 0;
         Font firacode;
+        string appPath = Application.StartupPath;
+        string fiStart;
+        int fiDNum;
+        string fiExt;
+
         public Form1()
         {
             InitializeComponent();
@@ -62,9 +67,12 @@ namespace FrameCompiler
             FileInfo fi = new FileInfo(FrameRangeDialog.FileName);
             DirectoryInfo directory = fi.Directory;
             Match matchinit = Regex.Match(fi.Name, @"(\d+)\.[a-z]+$");
+            fiStart = Regex.Replace(fi.Name, @"(\d+)\.[a-z]+$", "");
+            fiExt = fi.Extension;
             if (matchinit.Success)
             {
-                string wilds = new string('*', (matchinit.Groups[1].Value).Length);
+                fiDNum = (matchinit.Groups[1].Value).Length;
+                string wilds = new string('*', fiDNum);
                 string matcher = Regex.Replace(fi.Name, @"(\d+)\.[a-z]+$", wilds) + fi.Extension;
                 FileInfo[] files = directory.GetFiles(matcher, SearchOption.TopDirectoryOnly);
                 fileCount = files.Length;
@@ -78,9 +86,25 @@ namespace FrameCompiler
             InitializeVideo();
         }
 
+        private string RenderCommandFinal()
+        {
+            string file = fiStart + "%0" + fiDNum + "d" + fiExt; 
+            string dirc = "cd " + appPath + " & ";
+            string fmpc = "ffmpeg -r " + (string)FramesPerSecond.SelectedItem + " -i " + file +
+                " -vcodec libx264 -pix_fmt yuv420p " + fiStart + "." + ((string)FormatType.SelectedItem).ToLowerInvariant();
+            return dirc + fmpc;
+        }
+
         private void RenderButton_Click(object sender, EventArgs e)
         {
-
+            string command = RenderCommandFinal();
+            ProcessStartInfo startinfo = new ProcessStartInfo("cmd", "/c " + RenderCommandFinal());
+            startinfo.RedirectStandardOutput = true;
+            startinfo.UseShellExecute = false;
+            startinfo.CreateNoWindow = false;
+            Process proc = new Process();
+            proc.StartInfo = startinfo;
+            proc.Start();
         }
 
         private void FramesPerSecond_SelectedIndexChanged(object sender, EventArgs e)
