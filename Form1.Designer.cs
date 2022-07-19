@@ -42,7 +42,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.VideoLengthLabel = new System.Windows.Forms.Label();
+            this.CoverPanel = new System.Windows.Forms.Panel();
+            this.CoverText = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.RenderBox)).BeginInit();
+            this.CoverPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // SelectFramesButton
@@ -200,12 +203,34 @@
             this.VideoLengthLabel.TabIndex = 13;
             this.VideoLengthLabel.Text = "00:00:00.00";
             // 
+            // CoverPanel
+            // 
+            this.CoverPanel.BackColor = System.Drawing.Color.Transparent;
+            this.CoverPanel.Controls.Add(this.CoverText);
+            this.CoverPanel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.CoverPanel.Location = new System.Drawing.Point(0, -1);
+            this.CoverPanel.Name = "CoverPanel";
+            this.CoverPanel.Size = new System.Drawing.Size(630, 10);
+            this.CoverPanel.TabIndex = 14;
+            // 
+            // CoverText
+            // 
+            this.CoverText.AutoSize = true;
+            this.CoverText.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
+            this.CoverText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.CoverText.Location = new System.Drawing.Point(7, 435);
+            this.CoverText.Name = "CoverText";
+            this.CoverText.Size = new System.Drawing.Size(278, 29);
+            this.CoverText.TabIndex = 0;
+            this.CoverText.Text = "Rendering... Please Wait";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.ClientSize = new System.Drawing.Size(630, 473);
+            this.Controls.Add(this.CoverPanel);
             this.Controls.Add(this.VideoLengthLabel);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -218,10 +243,13 @@
             this.Controls.Add(this.FormatType);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SelectFramesButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Frame Compiler 0.0.1a";
             ((System.ComponentModel.ISupportInitialize)(this.RenderBox)).EndInit();
+            this.CoverPanel.ResumeLayout(false);
+            this.CoverPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -242,6 +270,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label VideoLengthLabel;
+        private System.Windows.Forms.Panel CoverPanel;
+        private System.Windows.Forms.Label CoverText;
     }
 }
 

@@ -54,7 +54,7 @@ namespace FrameCompiler
         private void UpdatePredictedTime()
         {
             float selectedFPS = float.Parse((string)FramesPerSecond.SelectedItem);
-            float seconds = (float)fileCount / selectedFPS;
+            float seconds = (float)fileCount / selectedFPS * 2f;
             int ms = (int)Math.Round((seconds - Math.Floor(seconds)) * 100);
             int sc = (int)(((seconds / 60) - Math.Floor(seconds / 60)) * 60);
             int mn = (int)((seconds / 60 / 60) - Math.Floor(seconds / 60 / 60));
@@ -97,14 +97,17 @@ namespace FrameCompiler
 
         private void RenderButton_Click(object sender, EventArgs e)
         {
+            CoverPanel.Size = new Size(630, 475);
             string command = RenderCommandFinal();
             ProcessStartInfo startinfo = new ProcessStartInfo("cmd", "/c " + RenderCommandFinal());
             startinfo.RedirectStandardOutput = true;
             startinfo.UseShellExecute = false;
-            startinfo.CreateNoWindow = false;
+            startinfo.CreateNoWindow = true;
             Process proc = new Process();
             proc.StartInfo = startinfo;
             proc.Start();
+            proc.WaitForExit();
+            CoverPanel.Size = new Size(630, 0);
         }
 
         private void FramesPerSecond_SelectedIndexChanged(object sender, EventArgs e)
