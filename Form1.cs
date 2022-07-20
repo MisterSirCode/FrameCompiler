@@ -89,9 +89,10 @@ namespace FrameCompiler
         private string RenderCommandFinal()
         {
             string file = fiStart + "%0" + fiDNum + "d" + fiExt; 
-            string dirc = "cd " + appPath + " & ";
-            string fmpc = "ffmpeg -r " + (string)FramesPerSecond.SelectedItem + " -i " + file +
-                " -vcodec libx264 -pix_fmt yuv420p " + fiStart + "." + ((string)FormatType.SelectedItem).ToLowerInvariant();
+            string dirc = "cd " + appPath + "\\Resources\\ & ";
+            string fmpc = "ffmpeg.exe -r " + (string)FramesPerSecond.SelectedItem + " -i " + file +
+                " -vcodec libx264 -pix_fmt yuv420p " + fiStart + "." + 
+                ((string)FormatType.SelectedItem).ToLowerInvariant() + " & pause";
             return dirc + fmpc;
         }
 
@@ -102,7 +103,7 @@ namespace FrameCompiler
             ProcessStartInfo startinfo = new ProcessStartInfo("cmd", "/c " + RenderCommandFinal());
             startinfo.RedirectStandardOutput = true;
             startinfo.UseShellExecute = false;
-            startinfo.CreateNoWindow = true;
+            startinfo.CreateNoWindow = false;
             Process proc = new Process();
             proc.StartInfo = startinfo;
             proc.Start();
